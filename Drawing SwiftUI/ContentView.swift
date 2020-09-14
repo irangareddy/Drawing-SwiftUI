@@ -7,54 +7,44 @@
 
 import SwiftUI
 
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-        return path
+struct ColorCyclingCircle: View {
+    var amount = 0.0
+    var steps = 100
+    
+    var body: some View {
+        ZStack {
+            ForEach(0..<steps) { value in
+                Circle()
+                    .inset(by: CGFloat(value))
+                    .strokeBorder(LinearGradient(gradient: Gradient(colors: [
+                        self.color(for: value, brightness: 1),
+                        self.color(for: value, brightness: 0.5)
+                    ]), startPoint: .top, endPoint: .bottom), lineWidth: 2)
+            }
+        }.drawingGroup()
     }
+    
+    func color(for value: Int, brightness: Double) -> Color {
+           var targetHue = Double(value) / Double(self.steps) + self.amount
+
+           if targetHue > 1 {
+               targetHue -= 1
+           }
+
+           return Color(hue: targetHue, saturation: 1, brightness: brightness)
+       }
+    
 }
-
-struct Arc: InsettableShape{
-    
-    var startAngle: Angle
-    var endAngle: Angle
-    var clockwise: Bool
-    var insetAmount: CGFloat = 0
-    
-    
-    func path(in rect: CGRect) -> Path {
-        let rotationAdjustment = Angle.degrees(90)
-        let modifiedStart = startAngle - rotationAdjustment
-        let modifiedEnd = endAngle - rotationAdjustment
-        var path = Path()
-        
-        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width/2 - insetAmount, startAngle: modifiedStart, endAngle: modifiedEnd, clockwise: !clockwise)
-        return path
-    }
-    
-    func inset(by amount: CGFloat) -> some InsettableShape {
-        var arc = self
-        arc.insetAmount = amount
-        return arc
-    }
-}
-
-
 
 struct ContentView: View {
+    @State private var colorCycle = 0.0
+
     var body: some View {
         VStack {
-            Triangle()
-                .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
-                .frame(width: 100, height: 100, alignment: .center)
-                .foregroundColor(.green)
-            Arc(startAngle: .degrees(0), endAngle: .degrees(180), clockwise: true)
-                .strokeBorder(Color.red,style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            ColorCyclingCircle(amount: self.colorCycle)
+                .frame(width: 300, height: 300)
+
+            Slider(value: $colorCycle)
         }
     }
 }
@@ -62,5 +52,37 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+
+struct FlowerView: View {
+    @State private var petalOffset = -20.0
+    @State private var petalWidth = 50.0
+    
+    var body: some View {
+        VStack {
+            
+            // MARK:- CGAffineTransform
+
+            
+            Flower(petalOffset: petalOffset, petalWidth: petalWidth)
+                .fill(Color.red, style: FillStyle(eoFill: true))
+            
+            Text("Offset")
+            Slider(value: $petalOffset, in: -40...40)
+                .padding([.horizontal,.bottom])
+            
+            Text("Width")
+            Slider(value: $petalWidth, in: 0...100)
+                .padding(.horizontal)
+            
+            // MARK:- ImagePaint
+
+            
+            Text("Ranga Reddy")
+                .frame(width: 300, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .border(ImagePaint(image: Image("AbstractShapes"), sourceRect: CGRect(x: 0, y: 0.3, width: 1, height: 0.5),scale: 0.1),width: 30)
+        }
     }
 }
