@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0DDD592510A01E004166A4 /* ColorCyclingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0DDD582510A01E004166A4 /* ColorCyclingCircle.swift */; };
 		1DCB3CB0250E6FB400A52847 /* Drawing_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB3CAF250E6FB400A52847 /* Drawing_SwiftUIApp.swift */; };
 		1DCB3CB2250E6FB400A52847 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCB3CB1250E6FB400A52847 /* ContentView.swift */; };
 		1DCB3CB4250E6FB500A52847 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DCB3CB3250E6FB500A52847 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D0DDD582510A01E004166A4 /* ColorCyclingCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCyclingCircle.swift; sourceTree = "<group>"; };
 		1DCB3CAC250E6FB400A52847 /* Drawing SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Drawing SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCB3CAF250E6FB400A52847 /* Drawing_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing_SwiftUIApp.swift; sourceTree = "<group>"; };
 		1DCB3CB1250E6FB400A52847 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				1DCB3CAF250E6FB400A52847 /* Drawing_SwiftUIApp.swift */,
 				1DCB3CB1250E6FB400A52847 /* ContentView.swift */,
+				1D0DDD582510A01E004166A4 /* ColorCyclingCircle.swift */,
 				1DF33D01250F5B4D00DF8228 /* Examples.swift */,
 				1DCB3CB3250E6FB500A52847 /* Assets.xcassets */,
 				1DCB3CB8250E6FB500A52847 /* Info.plist */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DCB3CB2250E6FB400A52847 /* ContentView.swift in Sources */,
+				1D0DDD592510A01E004166A4 /* ColorCyclingCircle.swift in Sources */,
 				1DF33D02250F5B4D00DF8228 /* Examples.swift in Sources */,
 				1DCB3CB0250E6FB400A52847 /* Drawing_SwiftUIApp.swift in Sources */,
 			);

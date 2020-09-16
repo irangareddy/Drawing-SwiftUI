@@ -67,3 +67,85 @@ struct Flower: Shape {
         return path
     }
 }
+
+
+struct Infinite: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+            path.addLines([
+                .init(x: 2, y: 1),
+                .init(x: 1, y: 0),
+                .init(x: 0, y: 1),
+                .init(x: 1, y: 2),
+                .init(x: 3, y: 0),
+                .init(x: 4, y: 1),
+                .init(x: 3, y: 2),
+                .init(x: 2, y: 1)
+            ])
+        return path
+    }
+    
+}
+
+
+
+struct Trapezoid: Shape {
+    var insetAmount: CGFloat
+    
+    var animatableData: CGFloat {
+        get { insetAmount }
+        set { self.insetAmount = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: 0, y: rect.maxY))
+        path.addLine(to: CGPoint(x: insetAmount, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX - insetAmount, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: 0, y: rect.maxY))
+
+        return path
+   }
+}
+
+
+struct Checkboard: Shape {
+    var rows: Int
+    var columns: Int
+    
+    public var animatableData: AnimatablePair<Double,Double> {
+        get {
+               AnimatablePair(Double(rows), Double(columns))
+            }
+
+            set {
+                self.rows = Int(newValue.first)
+                self.columns = Int(newValue.second)
+        }
+    }
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        let rowSize = rect.height / CGFloat(rows)
+        let columnSize = rect.width / CGFloat(columns)
+        
+        for row in 0..<rows {
+            for column in 0..<columns {
+                if(row+column).isMultiple(of: 2) {
+                    let startX = columnSize * CGFloat(column)
+                    let startY = rowSize * CGFloat(row)
+                    
+                    let rect = CGRect(x:startX,y : startY,width: columnSize,height: rowSize)
+                    path.addRect(rect)
+                }
+            }
+        }
+        
+        return path
+    }
+    
+    
+}
